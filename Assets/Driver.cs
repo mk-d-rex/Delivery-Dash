@@ -3,15 +3,16 @@ using UnityEngine.InputSystem;
 
 public class Driver : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = .1f;
-    [SerializeField] float steerSpeed = 20f;
+    [SerializeField] float moveSpeed = .1f; // Speed of forward/backward movement
+    [SerializeField] float steerSpeed = 20f; // Speed of rotation (steering)
 
     // Update is called once per frame
     void Update()
     {
-        float move = 0f;
-        float steer = 0f;
+        float move = 0f; // Movement input: 1 for forward, -1 for backward
+        float steer = 0f; // Steering input: 1 for left, -1 for right
 
+        // Check keyboard input for movement
         if (Keyboard.current.wKey.isPressed)
         {
             move = 1f;
@@ -20,6 +21,8 @@ public class Driver : MonoBehaviour
         {
             move = -1f;
         }
+
+        // Check keyboard input for steering
         if (Keyboard.current.aKey.isPressed)
         {
             steer = 1f;
@@ -28,9 +31,12 @@ public class Driver : MonoBehaviour
         {
             steer = -1f;
         }
+
+        // Calculate movement and steering amounts based on input and time
         float moveAmount = move * moveSpeed * Time.deltaTime;
         float steerAmount = steer * steerSpeed * Time.deltaTime;
 
+        // Apply steering (rotation) and movement (translation)
         transform.Rotate(0, 0, steerAmount);
         transform.Translate(0, moveAmount, 0);
     }
